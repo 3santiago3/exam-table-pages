@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>考试记录表</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div id="auth" class="auth">
+      <div class="auth-card">
+        <div class="auth-title">输入口令查看</div>
+        <div class="auth-row">
+          <input
+            id="password"
+            class="auth-input"
+            type="password"
+            placeholder="口令"
+            autocomplete="current-password"
+          />
+          <button id="login" class="btn primary">进入</button>
+        </div>
+        <div id="authError" class="auth-error"></div>
+      </div>
+    </div>
+
+    <div id="app" class="app hidden">
+      <header class="topbar">
+        <div class="title">考试记录表</div>
+        <div class="actions">
+          <button id="exportExcel" class="btn">导出 Excel</button>
+          <button id="logout" class="btn">退出</button>
+        </div>
+      </header>
+
+      <section class="panel">
+        <div class="filters">
+          <input id="q" class="input" placeholder="搜索：任意字段" />
+          <select id="person" class="select">
+            <option value="">全部人员</option>
+            <option value="李润丰">李润丰</option>
+            <option value="廖素芬">廖素芬</option>
+          </select>
+          <select id="type" class="select">
+            <option value="">全部大类</option>
+            <option value="公务员">公务员</option>
+            <option value="事业编">事业编</option>
+          </select>
+          <select id="subType" class="select">
+            <option value="">全部类型</option>
+          </select>
+        </div>
+        <div id="summary" class="summary"></div>
+      </section>
+
+      <section class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr id="theadRow"></tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </section>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
