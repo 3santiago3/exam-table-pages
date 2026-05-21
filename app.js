@@ -262,6 +262,50 @@ function renderSummary(list) {
   $("summary").textContent = `当前展示 ${total} 条${parts.length ? ` · ${parts.join(" · ")}` : ""}`;
 }
 
+function rebuildPersonOptions() {
+  const selected = safeText($("person").value).trim();
+  const set = new Set();
+  for (const x of rawData) {
+    const p = safeText(x.person).trim();
+    if (p) set.add(p);
+  }
+
+  const options = ["", ...Array.from(set).sort((a, b) => a.localeCompare(b, "zh-Hans-CN"))];
+  const sel = $("person");
+  sel.innerHTML = "";
+  for (const v of options) {
+    const opt = document.createElement("option");
+    opt.value = v;
+    opt.textContent = v ? v : "全部人员";
+    sel.appendChild(opt);
+  }
+
+  if (options.includes(selected)) sel.value = selected;
+  else sel.value = "";
+}
+
+function rebuildTypeOptions() {
+  const selected = safeText($("type").value).trim();
+  const set = new Set();
+  for (const x of rawData) {
+    const t = safeText(x.examType).trim();
+    if (t) set.add(t);
+  }
+
+  const options = ["", ...Array.from(set).sort((a, b) => a.localeCompare(b, "zh-Hans-CN"))];
+  const sel = $("type");
+  sel.innerHTML = "";
+  for (const v of options) {
+    const opt = document.createElement("option");
+    opt.value = v;
+    opt.textContent = v ? v : "全部大类";
+    sel.appendChild(opt);
+  }
+
+  if (options.includes(selected)) sel.value = selected;
+  else sel.value = "";
+}
+
 function rebuildSubTypeOptions() {
   const type = safeText($("type").value).trim();
   const selected = safeText($("subType").value).trim();
@@ -344,6 +388,8 @@ async function loadData(password) {
   const text = await decryptDataEnc(password);
   const json = JSON.parse(text);
   rawData = Array.isArray(json) ? json : json.records || [];
+  rebuildPersonOptions();
+  rebuildTypeOptions();
   rebuildSubTypeOptions();
   applyFilters();
 }
